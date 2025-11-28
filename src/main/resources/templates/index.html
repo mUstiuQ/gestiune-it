@@ -15,11 +15,32 @@
 
 <div class="welcome">
     <span th:text="${mesajBunVenit}">Bine ai venit, Utilizator</span>
+    <div th:if="${rolUtilizator == 'ROLE_EDITOR'}" style="margin-bottom: 15px;">
+        <a href="/adaugare" style="font-size: 18px; color: purple; font-weight: bold;">Adaugă echipament nou</a>
+    </div>
 </div>
 
 <p>Rolul tau este: <span th:text="${rolUtilizator}">ROLE_XXX</span></p>
 
 <hr>
+<div style="margin: 20px auto; width: 80%; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">
+    <form action="/" method="get">
+        <input type="text" name="brand" placeholder="Brand (ex: Dell)" th:value="${filtruBrand}" style="padding: 5px; margin-right: 10px;">
+
+        <input type="text" name="tip" placeholder="Tip (ex: Laptop)" th:value="${filtruTip}" style="padding: 5px; margin-right: 10px;">
+
+        <input type="text" name="os" placeholder="OS (ex: Windows)" th:value="${filtruOs}" style="padding: 5px; margin-right: 10px;">
+
+        <button type="submit" style="padding: 5px 15px; background-color: #6c757d; color: white; border: none; cursor: pointer;">
+            Filtrează
+        </button>
+
+        <a href="/" style="margin-left: 10px; text-decoration: none; color: blue;">Resetează</a>
+    </form>
+</div>
+
+<h3 th:text="${mesajTabel}">Toate Echipamentele</h3>
+
 <h3>Toate Echipamentele</h3>
 
 <table border="1" style="width: 90%; margin: 0 auto; border-collapse: collapse;">
@@ -36,6 +57,7 @@
         <th>OS</th>
         <th>Preț (RON)</th>
     </tr>
+    <th th:if="${rolUtilizator == 'ROLE_EDITOR'}">Acțiuni</th>
     </thead>
     <tbody>
     <tr th:each="item : ${echipamente}">
@@ -49,6 +71,12 @@
         <td th:text="${item.capacitateStocare}">256</td>
         <td th:text="${item.sistemOperare}">Win</td>
         <td th:text="${item.pret}">0.0</td>
+        td th:if="${rolUtilizator == 'ROLE_EDITOR'}">
+        <a th:href="@{/editare/{id}(id=${item.numarInventar})}" style="color: blue;">Editează</a>
+        |
+        <a th:href="@{/stergere/{id}(id=${item.numarInventar})}" style="color: red;"
+           onclick="return confirm('Sigur vrei să ștergi acest echipament?');">Șterge</a>
+        </td>
     </tr>
     </tbody>
 </table>

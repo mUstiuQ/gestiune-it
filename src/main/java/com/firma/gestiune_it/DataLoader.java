@@ -21,11 +21,11 @@ public class DataLoader implements CommandLineRunner {
         // 1. Verificam si cream utilizatorii (codul vechi ramane, il las mai jos condensat)
         if (utilizatorRepository.count() == 0) {
             Utilizator user = new Utilizator();
-            user.setNume("Ion Ionescu"); user.setUsername("user"); user.setParola(passwordEncoder.encode("parola123")); user.setRol("ROLE_USER");
+            user.setNume("David Andrei"); user.setUsername("user"); user.setParola(passwordEncoder.encode("parola123")); user.setRol("ROLE_USER");
             utilizatorRepository.save(user);
 
             Utilizator editor = new Utilizator();
-            editor.setNume("Gigi Georgescu"); editor.setUsername("editor"); editor.setParola(passwordEncoder.encode("parola123")); editor.setRol("ROLE_EDITOR");
+            editor.setNume("Fodoka David-Andrei"); editor.setUsername("editor"); editor.setParola(passwordEncoder.encode("parola123")); editor.setRol("ROLE_EDITOR");
             utilizatorRepository.save(editor);
         }
 
