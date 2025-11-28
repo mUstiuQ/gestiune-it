@@ -49,11 +49,10 @@ public class MainController {
                     (os != null && !os.isEmpty() ? " OS='" + os + "'" : "");
         } else {
             listaFiltrata = echipamentService.getAllEchipamente();
-            mesajTabel = "Toate echipamentele din parc";
         }
 
         model.addAttribute("echipamente", listaFiltrata);
-        model.addAttribute("mesajTabel", mesajTabel);
+
 
         // Trimitem valorile inapoi in pagina ca sa ramana scrise in casute
         model.addAttribute("filtruBrand", brand);

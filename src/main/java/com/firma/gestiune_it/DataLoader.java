@@ -21,18 +21,18 @@ public class DataLoader implements CommandLineRunner {
         // 1. Verificam si cream utilizatorii (codul vechi ramane, il las mai jos condensat)
         if (utilizatorRepository.count() == 0) {
             Utilizator user = new Utilizator();
-            user.setNume("David Andrei"); user.setUsername("user"); user.setParola(passwordEncoder.encode("parola123")); user.setRol("ROLE_USER");
+            user.setNume("David Andrei"); user.setUsername("angajat"); user.setParola(passwordEncoder.encode("david123")); user.setRol("ROLE_ANGAJAT_MEDIOCRU");
             utilizatorRepository.save(user);
 
             Utilizator editor = new Utilizator();
-            editor.setNume("Fodoka David-Andrei"); editor.setUsername("editor"); editor.setParola(passwordEncoder.encode("parola123")); editor.setRol("ROLE_EDITOR");
+            editor.setNume("Fodoka David-Andrei"); editor.setUsername("admin"); editor.setParola(passwordEncoder.encode("editor321!")); editor.setRol("ROLE_ADMIN_REGAL");
             utilizatorRepository.save(editor);
         }
 
         // 2. Adaugam Echipamente DOAR daca tabelul e gol
         if (echipamentRepository.count() == 0) {
             // Trebuie sa stim cine a adaugat echipamentul (il luam pe editor din baza de date)
-            Utilizator editor = utilizatorRepository.findByUsername("editor").get();
+            Utilizator editor = utilizatorRepository.findByUsername("admin").get();
 
             Echipament e1 = new Echipament();
             e1.setNumarInventar("IT-001");
@@ -46,7 +46,7 @@ public class DataLoader implements CommandLineRunner {
             e1.setCapacitateStocare(512);
             e1.setSistemOperare("Windows 10 Pro");
             e1.setPret(4500.0);
-            e1.setUtilizator(editor); // Legatura cu userul
+            e1.setUtilizator(editor); // Legatura cu adminul
             echipamentRepository.save(e1);
 
             Echipament e2 = new Echipament();

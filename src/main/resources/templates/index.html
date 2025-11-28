@@ -15,7 +15,7 @@
 
 <div class="welcome">
     <span th:text="${mesajBunVenit}">Bine ai venit, Utilizator</span>
-    <div th:if="${rolUtilizator == 'ROLE_EDITOR'}" style="margin-bottom: 15px;">
+    <div th:if="${rolUtilizator == 'ROLE_ADMIN_REGAL'}" style="margin-bottom: 15px;">
         <a href="/adaugare" style="font-size: 18px; color: purple; font-weight: bold;">Adaugă echipament nou</a>
     </div>
 </div>
@@ -56,8 +56,9 @@
         <th>Stocare (GB)</th>
         <th>OS</th>
         <th>Preț (RON)</th>
+
+        <th th:if="${rolUtilizator == 'ROLE_ADMIN_REGAL'}">Acțiuni</th>
     </tr>
-    <th th:if="${rolUtilizator == 'ROLE_EDITOR'}">Acțiuni</th>
     </thead>
     <tbody>
     <tr th:each="item : ${echipamente}">
@@ -71,11 +72,12 @@
         <td th:text="${item.capacitateStocare}">256</td>
         <td th:text="${item.sistemOperare}">Win</td>
         <td th:text="${item.pret}">0.0</td>
-        td th:if="${rolUtilizator == 'ROLE_EDITOR'}">
-        <a th:href="@{/editare/{id}(id=${item.numarInventar})}" style="color: blue;">Editează</a>
-        |
-        <a th:href="@{/stergere/{id}(id=${item.numarInventar})}" style="color: red;"
-           onclick="return confirm('Sigur vrei să ștergi acest echipament?');">Șterge</a>
+
+        <td th:if="${rolUtilizator == 'ROLE_ADMIN_REGAL'}" style="text-align: center;">
+            <a th:href="@{/editare/{id}(id=${item.numarInventar})}" style="color: blue;">Editează</a>
+            |
+            <a th:href="@{/stergere/{id}(id=${item.numarInventar})}" style="color: red;"
+               onclick="return confirm('Sigur vrei să ștergi acest echipament?');">Șterge</a>
         </td>
     </tr>
     </tbody>
