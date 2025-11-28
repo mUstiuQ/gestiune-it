@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestiune IT - Home</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        .welcome { font-size: 24px; font-weight: bold; color: #333; }
+        .logout-btn {
+            display: inline-block; margin-top: 20px; padding: 10px 20px;
+            background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome">
+    <span th:text="${mesajBunVenit}">Bine ai venit, Utilizator</span>
+</div>
+
+<p>Rolul tau este: <span th:text="${rolUtilizator}">ROLE_XXX</span></p>
+
+<hr>
+<h3>Toate Echipamentele</h3>
+
+<table border="1" style="width: 90%; margin: 0 auto; border-collapse: collapse;">
+    <thead>
+    <tr style="background-color: #f2f2f2;">
+        <th>Nr. Inventar</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Tip</th>
+        <th>Status</th>
+        <th>Procesor</th>
+        <th>RAM (GB)</th>
+        <th>Stocare (GB)</th>
+        <th>OS</th>
+        <th>Preț (RON)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${echipamente}">
+        <td th:text="${item.numarInventar}">IT-XXX</td>
+        <td th:text="${item.brand}">Brand</td>
+        <td th:text="${item.model}">Model</td>
+        <td th:text="${item.tipEchipament}">Tip</td>
+        <td th:text="${item.status}">Status</td>
+        <td th:text="${item.procesor}">CPU</td>
+        <td th:text="${item.memorieRam}">8</td>
+        <td th:text="${item.capacitateStocare}">256</td>
+        <td th:text="${item.sistemOperare}">Win</td>
+        <td th:text="${item.pret}">0.0</td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="logout-btn">Logout</button>
+</form>
+
+</body>
+</html>
