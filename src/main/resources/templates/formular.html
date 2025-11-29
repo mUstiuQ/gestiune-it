@@ -1,58 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Gestiune Echipament</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-        button { margin-top: 20px; padding: 10px 20px; background-color: green; color: white; border: none; cursor: pointer; }
-    </style>
+    <title>Editare Echipament</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>body { background-color: #e9ecef; }</style>
 </head>
 <body>
 
-<h2 th:text="${titluPagina}">Formular Echipament</h2>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fa-solid fa-pen-to-square me-2"></i><span th:text="${titluPagina}">Formular</span></h4>
+                </div>
+                <div class="card-body p-4">
 
-<form th:action="@{/salvare}" th:object="${echipamentForm}" method="post">
+                    <form th:action="@{/salvare}" th:object="${echipamentForm}" method="post" class="row g-3">
 
-    <label>Număr Inventar (Nu se poate modifica la editare):</label>
-    <input type="text" th:field="*{numarInventar}" required
-           th:readonly="${modEditare == true}"
-           th:style="${modEditare == true ? 'background-color: #ccc' : ''}"/>
+                        <h6 class="text-muted border-bottom pb-2 mb-3">Date Generale</h6>
 
-    <label>Brand:</label>
-    <input type="text" th:field="*{brand}" required />
+                        <div class="col-md-4">
+                            <label class="form-label">Număr Inventar</label>
+                            <input type="text" th:field="*{numarInventar}" class="form-control"
+                                   th:readonly="${modEditare}"
+                                   th:classappend="${modEditare ? 'bg-light' : ''}" required>
+                            <div class="form-text" th:if="${!modEditare}">Trebuie să fie unic (ex: IT-001)</div>
+                        </div>
 
-    <label>Model:</label>
-    <input type="text" th:field="*{model}" required />
+                        <div class="col-md-4">
+                            <label class="form-label">Brand</label>
+                            <input type="text" th:field="*{brand}" class="form-control" required>
+                        </div>
 
-    <label>Tip Echipament:</label>
-    <input type="text" th:field="*{tipEchipament}" placeholder="Laptop, PC, Monitor..." required />
+                        <div class="col-md-4">
+                            <label class="form-label">Model</label>
+                            <input type="text" th:field="*{model}" class="form-control" required>
+                        </div>
 
-    <label>Status:</label>
-    <input type="text" th:field="*{status}" placeholder="Activ, Defect..." />
+                        <div class="col-md-6">
+                            <label class="form-label">Tip Echipament</label>
+                            <select th:field="*{tipEchipament}" class="form-select">
+                                <option value="Laptop">Laptop</option>
+                                <option value="Desktop PC">Desktop PC</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Server">Server</option>
+                                <option value="Periferice">Periferice</option>
+                            </select>
+                        </div>
 
-    <label>An Achiziție:</label>
-    <input type="number" th:field="*{anAchizitie}" />
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <select th:field="*{status}" class="form-select">
+                                <option value="Activ">Activ</option>
+                                <option value="In stoc">În stoc</option>
+                                <option value="Defect">Defect</option>
+                                <option value="Casat">Casat</option>
+                            </select>
+                        </div>
 
-    <label>Procesor:</label>
-    <input type="text" th:field="*{procesor}" />
+                        <h6 class="text-muted border-bottom pb-2 mb-3 mt-4">Specificații Tehnice</h6>
 
-    <label>Memorie RAM (GB):</label>
-    <input type="number" th:field="*{memorieRam}" />
+                        <div class="col-md-4">
+                            <label class="form-label">Procesor</label>
+                            <input type="text" th:field="*{procesor}" class="form-control" placeholder="ex: i7-11800H">
+                        </div>
 
-    <label>Stocare (GB):</label>
-    <input type="number" th:field="*{capacitateStocare}" />
+                        <div class="col-md-4">
+                            <label class="form-label">RAM (GB)</label>
+                            <input type="number" th:field="*{memorieRam}" class="form-control">
+                        </div>
 
-    <label>Sistem Operare:</label>
-    <input type="text" th:field="*{sistemOperare}" />
+                        <div class="col-md-4">
+                            <label class="form-label">Stocare (GB)</label>
+                            <input type="number" th:field="*{capacitateStocare}" class="form-control">
+                        </div>
 
-    <label>Preț (RON):</label>
-    <input type="number" step="0.01" th:field="*{pret}" />
+                        <div class="col-md-6">
+                            <label class="form-label">Sistem Operare</label>
+                            <input type="text" th:field="*{sistemOperare}" class="form-control">
+                        </div>
 
-    <button type="submit">Salvează Echipamentul</button>
-    <a href="/" style="margin-left: 20px;">Anulează</a>
-</form>
+                        <div class="col-md-3">
+                            <label class="form-label">An Achiziție</label>
+                            <input type="number" th:field="*{anAchizitie}" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Preț (RON)</label>
+                            <input type="number" step="0.01" th:field="*{pret}" class="form-control border-success">
+                        </div>
+
+                        <div class="col-12 mt-4 d-flex justify-content-between">
+                            <a href="/" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Înapoi</a>
+                            <button type="submit" class="btn btn-success px-5"><i class="fa-solid fa-save"></i> Salvează Modificările</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

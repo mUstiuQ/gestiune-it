@@ -16,13 +16,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        // Aici permitem accesul la fisiere statice (css, js, imagini) fara login
+                        // aici permitem accesul la fisiere statice (css, js, imagini) fara login
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        // Orice alta cerere necesita autentificare (login)
+                        // orice alta cerere necesita autentificare (login)
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        // Vom folosi pagina de login default a Spring pentru moment
+                        // vom folosi pagina de login default a Spring
                         // Cand vom face frontend-ul, vom personaliza aici
                         .permitAll()
                         .defaultSuccessUrl("/", true) // Daca login-ul e ok, mergem pe prima pagina
@@ -35,7 +35,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Aici definim algoritmul de criptare a parolelor
+    // aici definim algoritmul de criptare a parolelor
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
