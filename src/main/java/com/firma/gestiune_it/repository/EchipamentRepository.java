@@ -2,9 +2,9 @@ package com.firma.gestiune_it.repository;
 
 import com.firma.gestiune_it.model.Echipament;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor; // Ne ajuta la filtrare dinamica
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor; // ne ajuta la filtrare dinamica
 
-// Atentie: Cheia primara aici e String (numarInventar), nu Long
+//cheia primara aici e String (numarInventar)g
 public interface EchipamentRepository extends JpaRepository<Echipament, String>, JpaSpecificationExecutor<Echipament> {
-    // Aici vom adauga metode de filtrare mai tarziu
+    // putem sa mai adaugam metode de filtrare
 }

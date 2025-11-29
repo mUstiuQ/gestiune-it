@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired private UtilizatorRepository utilizatorRepository;
-    @Autowired private EchipamentRepository echipamentRepository; // Am adaugat asta
+    @Autowired private EchipamentRepository echipamentRepository;
     @Autowired private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-        // 1. Verificam si cream utilizatorii (codul vechi ramane, il las mai jos condensat)
+        // 1. verificam si cream utilizatorii
         if (utilizatorRepository.count() == 0) {
             Utilizator user = new Utilizator();
             user.setNume("David Andrei"); user.setUsername("angajat"); user.setParola(passwordEncoder.encode("david123")); user.setRol("ROLE_ANGAJAT_MEDIOCRU");
@@ -29,9 +29,9 @@ public class DataLoader implements CommandLineRunner {
             utilizatorRepository.save(editor);
         }
 
-        // 2. Adaugam Echipamente DOAR daca tabelul e gol
+        // 2. adaugam echipamente doar daca tabelul e gol
         if (echipamentRepository.count() == 0) {
-            // Trebuie sa stim cine a adaugat echipamentul (il luam pe editor din baza de date)
+            // trebuie sa stim cine a adaugat echipamentul
             Utilizator editor = utilizatorRepository.findByUsername("admin").get();
 
             Echipament e1 = new Echipament();
@@ -46,7 +46,7 @@ public class DataLoader implements CommandLineRunner {
             e1.setCapacitateStocare(512);
             e1.setSistemOperare("Windows 10 Pro");
             e1.setPret(4500.0);
-            e1.setUtilizator(editor); // Legatura cu adminul
+            e1.setUtilizator(editor); // legatura cu adminul
             echipamentRepository.save(e1);
 
             Echipament e2 = new Echipament();

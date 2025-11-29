@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification; // Atentie la import!
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,23 +26,23 @@ public class EchipamentService {
         Specification<Echipament> spec = (root, query, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
 
-            // 1. Daca utilizatorul a scris ceva la Brand, adaugam regula
+            // 1. daca utilizatorul a scris ceva la Brand, adaugam regula
             if (StringUtils.hasText(brand)) {
                 // like %text% inseamna ca gaseste si daca scrii doar "De" pentru "Dell"
                 predicateList.add(cb.like(cb.lower(root.get("brand")), "%" + brand.toLowerCase() + "%"));
             }
 
-            // 2. Daca a scris ceva la Tip
+            // 2. daca a scris ceva la Tip
             if (StringUtils.hasText(tip)) {
                 predicateList.add(cb.like(cb.lower(root.get("tipEchipament")), "%" + tip.toLowerCase() + "%"));
             }
 
-            // 3. Daca a scris ceva la OS
+            // 3. daca a scris ceva la OS
             if (StringUtils.hasText(os)) {
                 predicateList.add(cb.like(cb.lower(root.get("sistemOperare")), "%" + os.toLowerCase() + "%"));
             }
 
-            // 4. Le unim pe toate cu AND (si)
+            // 4. le unim pe toate cu AND
             return cb.and(predicateList.toArray(new Predicate[0]));
         };
 

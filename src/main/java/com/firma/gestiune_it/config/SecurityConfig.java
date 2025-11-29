@@ -22,10 +22,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        // vom folosi pagina de login default a Spring
-                        // Cand vom face frontend-ul, vom personaliza aici
+                        // am facut frontend-u;
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
-                        .defaultSuccessUrl("/", true) // Daca login-ul e ok, mergem pe prima pagina
                 )
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/login?logout")

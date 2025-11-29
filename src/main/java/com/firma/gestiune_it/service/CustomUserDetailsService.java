@@ -20,11 +20,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 1. Cautam utilizatorul in baza noastra de date
+        // 1.cautam utilizatorul in baza noastra de date
         Utilizator user = utilizatorRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilizatorul nu exista!"));
 
-        // 2. Il transformam intr-un obiect pe care Spring Security il intelege (UserDetails)
+        // 2. il transformam intr-un obiect pe care Spring Security il intelege (UserDetails)
         return new User(
                 user.getUsername(),
                 user.getParola(),

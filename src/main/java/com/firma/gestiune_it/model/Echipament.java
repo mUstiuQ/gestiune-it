@@ -10,28 +10,27 @@ import lombok.NoArgsConstructor;
 @Table(name = "echipamente")
 public class Echipament {
 
-    @Id // Cheie primara care NU e auto-increment (o introducem noi, ex: IT-001)
+    @Id // cheie primara care nu e auto-increment (o introducem noi, ex: IT-001)
     @Column(name = "numar_inventar")
     private String numarInventar;
 
-    private String brand; // ex: Dell
-    private String model; // ex: Latitude 5420
-    private String status; // ex: Activ, Defect (in loc de culoare)
+    private String brand;
+    private String model;
+    private String status;
 
     @Column(name = "an_achizitie")
-    private Integer anAchizitie; // in loc de an fabricatie
+    private Integer anAchizitie;
 
-    private String procesor; // in loc de capacitate cilindrica
+    private String procesor;
 
     @Column(name = "tip_echipament")
-    private String tipEchipament; // ex: Laptop, Server (in loc de combustibil) - FILTRU
+    private String tipEchipament;
 
-    private Integer memorieRam; // in loc de putere
-    private Integer capacitateStocare; // in loc de cuplu
-    private String sistemOperare; // in loc de volum portbagaj
+    private Integer memorieRam;
+    private Integer capacitateStocare;
+    private String sistemOperare;
     private Double pret;
 
-    // Relatia cu Utilizatorul (Cine a adaugat echipamentul)
     // ManyToOne = Multe echipamente pot fi adaugate de un singur utilizator
     @ManyToOne
     @JoinColumn(name = "id_utilizator", nullable = false)

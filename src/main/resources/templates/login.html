@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Autentificare - IT Asset Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-login {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+        .card-header {
+            background-color: white;
+            border-bottom: none;
+            padding-top: 2rem;
+            text-align: center;
+        }
+        .btn-login {
+            background-color: #6610f2; /* Mov Regal */
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .btn-login:hover {
+            background-color: #520dc2;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #6610f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card card-login">
+    <div class="card-header">
+        <div class="mb-3">
+            <i class="fa-solid fa-crown fa-3x text-warning"></i>
+        </div>
+        <h4 class="text-dark fw-bold">IT Asset Manager</h4>
+        <p class="text-muted small">Introdu datele de acces</p>
+    </div>
+
+    <div class="card-body p-4">
+
+        <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
+            <i class="fa-solid fa-circle-exclamation me-1"></i> User sau parola gresita!
+        </div>
+
+        <div th:if="${param.logout}" class="alert alert-success text-center" role="alert">
+            <i class="fa-solid fa-check-circle me-1"></i> Te-ai delogat cu succes.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+
+            <div class="form-floating mb-3">
+                <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Utilizator" required>
+                <label for="usernameInput"><i class="fa-solid fa-user me-1"></i> Username</label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Parola" required>
+                <label for="passwordInput"><i class="fa-solid fa-lock me-1"></i> Parola</label>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-login text-white btn-lg rounded-pill shadow-sm">
+                    AUTENTIFICARE <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+    <div class="card-footer text-center py-3 bg-light">
+        <small class="text-muted">Proiect Java & Spring Boot by Fodoka David-Andrei &copy; 2024</small>
+    </div>
+</div>
+
+</body>
+</html>

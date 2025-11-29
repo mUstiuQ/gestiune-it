@@ -17,12 +17,12 @@ import java.util.List;
 public class MainController {
 
     @Autowired private UtilizatorRepository utilizatorRepository;
-    @Autowired private EchipamentService echipamentService; // 1. Injectam Service-ul
-    @Autowired private EchipamentRepository echipamentRepository; // Injectam si repo-ul direct pentru stergere rapida
+    @Autowired private EchipamentService echipamentService; // injectam Service-ul
+    @Autowired private EchipamentRepository echipamentRepository; // injectam si repo-ul direct pentru stergere rapida
 
     @GetMapping("/")
     public String index(Model model, Principal principal,
-                        // Acesti parametri sunt optionali (required = false)
+                        // parametrii optionali pt testing (required = false)
                         @RequestParam(required = false) String brand,
                         @RequestParam(required = false) String tip,
                         @RequestParam(required = false) String os) {
@@ -36,7 +36,7 @@ public class MainController {
         List<Echipament> listaFiltrata;
         String mesajTabel;
 
-        // Verificam daca s-a facut vreo filtrare
+        // verificam daca s a facut vreo filtrare
         boolean areFiltre = (brand != null && !brand.isEmpty()) ||
                 (tip != null && !tip.isEmpty()) ||
                 (os != null && !os.isEmpty());
@@ -54,7 +54,7 @@ public class MainController {
         model.addAttribute("echipamente", listaFiltrata);
 
 
-        // Trimitem valorile inapoi in pagina ca sa ramana scrise in casute
+        // trimitem valorile inapoi in pagina ca sa ramana scrise in casute
         model.addAttribute("filtruBrand", brand);
         model.addAttribute("filtruTip", tip);
         model.addAttribute("filtruOs", os);
@@ -64,23 +64,23 @@ public class MainController {
 
     @GetMapping("/stergere/{id}")
     public String stergeEchipament(@PathVariable String id) {
-        // Stergem echipamentul pe baza ID-ului (numarInventar)
+        // stergem echipamentul pe baza ID-ului
         echipamentRepository.deleteById(id);
 
-        // Ne intoarcem la pagina principala
+        // ne intoarcem la pagina principala
         return "redirect:/";
     }
 
     @GetMapping("/adaugare")
     public String arataFormularAdaugare(Model model) {
-        // Trimitem un obiect gol catre HTML
+        // trimitem un obiect gol catre HTML
         model.addAttribute("echipamentForm", new Echipament());
         model.addAttribute("titluPagina", "Adaugă Echipament Nou");
         model.addAttribute("modEditare", false);
         return "formular";
     }
 
-    // 2. Afisare Formular Plin (Editare)
+    //  afisare formular plin (pt editare)
     @GetMapping("/editare/{id}")
     public String arataFormularEditare(@PathVariable String id, Model model) {
         // Cautam echipamentul existent
@@ -92,18 +92,18 @@ public class MainController {
         return "formular";
     }
 
-    // 3. Salvarea Datelor (Valabil si pt Adaugare si pt Editare)
+    //salvarea datelor (atat pt adaugare cat si pt editare)
     @PostMapping("/salvare")
     public String salveazaEchipament(@ModelAttribute("echipamentForm") Echipament echipament, Principal principal) {
-        // Trebuie sa setam Utilizatorul care face modificarea (Editorul curent)
+        // trebuie sa setam utilizatorul care face modificarea
         String username = principal.getName();
         Utilizator editor = utilizatorRepository.findByUsername(username).get();
 
         echipament.setUtilizator(editor);
 
-        // Functia save face "Upsert":
-        // Daca ID-ul exista deja -> face UPDATE.
-        // Daca ID-ul e nou -> face INSERT.
+        // functia save face "Upsert":
+        // daca ID-ul exista deja -> face UPDATE.
+        // daca ID-ul e nou -> face INSERT.
         echipamentRepository.save(echipament);
 
         return "redirect:/";
